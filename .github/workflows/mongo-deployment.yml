@@ -29,6 +29,8 @@ jobs:
         run: npm run build
 
       - name: global variable
-        run: echo "Global value: $global_var"
+        run: |
+          echo "Global value: $global_var"
       - name: job variable
-        run: echo "Job value: $job_var"
+        run: |
+          echo "Job value: $job_var"
