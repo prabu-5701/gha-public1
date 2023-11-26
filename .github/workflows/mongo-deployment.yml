@@ -7,6 +7,7 @@ on:
 
 env:
   global_var: 'Global_Value'
+  MONGODB_DB_NAME: gha-demo
 
 jobs:
   test:
@@ -14,6 +15,9 @@ jobs:
     env:
       job_var: Job_Value
       PORT: 8080
+      MONGODB_CLUSTER_ADDRESS: mongo1.xwxl4f6.mongodb.net
+      MONGODB_USERNAME: admin
+      MONGODB_PASSWORD: Kjf4doQhI5bsdczw
     steps:
       - name: get code
         uses: actions/checkout@v4
@@ -34,6 +38,21 @@ jobs:
       - name: global variable
         run: |
           echo "Global value: $global_var"
+      - name: Output information
+        run: |
+          echo "MONGODB_USERNAME: $MONGODB_USERNAME"
       - name: job variable
         run: |
           echo "Job value: $job_var"
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        env:
+          PORT: 3000
+        run: |        
+          echo "MONGODB_DB_NAME: $MONGODB_DB_NAME"
+          echo "MONGODB_USERNAME: $MONGODB_USERNAME"
+          echo "${{ env.PORT }}"
