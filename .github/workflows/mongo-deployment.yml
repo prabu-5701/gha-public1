@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       job_var: Job_Value
+      PORT: 8080
     steps:
       - name: get code
         uses: actions/checkout@v4
@@ -23,6 +24,8 @@ jobs:
           key: node-deps-modules-${{ hashFiles('**/package-lock.json') }}
       - name: install dependencies
         run: npm ci
+      - name: run server
+        run: npm start & npx wait-on https://127.0.0.1:$PORT # requires MongoDB Atlas to accept requests from anywhere!
       - name: test the code
         run: npm test
       - name: build the code
