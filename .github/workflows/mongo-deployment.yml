@@ -12,12 +12,15 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: dev-env
     env:
       job_var: Job_Value
       PORT: 8080
       MONGODB_CLUSTER_ADDRESS: mongo1.xwxl4f6.mongodb.net
-      MONGODB_USERNAME: admin
-      MONGODB_PASSWORD: Kjf4doQhI5bsdczw
+      MONGODB_USERNAME: ${{ secrets.MONGODB_USER }}
+      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASS }}
+      #MONGODB_USERNAME: admin
+      #MONGODB_PASSWORD: Kjf4doQhI5bsdczw
     steps:
       - name: get code
         uses: actions/checkout@v4
